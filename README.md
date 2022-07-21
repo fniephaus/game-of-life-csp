@@ -15,7 +15,7 @@ Prior to Project Loom and virtual threads, CSP style programming in this manner 
 
 # Build
 
-GraalVM 22.2 or later is required.
+GraalVM 22.3 or later is required (set `JAVA_HOME` to its installation directory).
 
 ---
 Build JAR with `mvn`:
@@ -23,9 +23,9 @@ Build JAR with `mvn`:
 mvn package
 ```
 
-Build native image with GraalVM (adjust parallelism to your machine's number of hardware threads or cores):
+Build GraalVM native image executable:
 ```
-native-image -cp target/csp-game-of-life-1.0.0-SNAPSHOT.jar -H:+SupportContinuations -Djdk.virtualThreadScheduler.parallelism=16 --add-exports org.graalvm.nativeimage.builder/com.oracle.svm.core.thread=ALL-UNNAMED gameoflife.Main
+native-image -J--enable-preview -cp target/csp-game-of-life-1.0.0-SNAPSHOT.jar gameoflife.Main
 ```
 
 Run:
