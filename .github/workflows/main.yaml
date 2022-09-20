@@ -17,36 +17,27 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Build JDK19-based GraalVM Native Image from source
-        run: |
-          git clone --depth 1 https://github.com/oracle/graal.git
-          git clone --depth 1 https://github.com/graalvm/mx.git
-          export MX_EXEC="$(pwd)/mx/mx"
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'dev'
+          java-version: '19'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          ${MX_EXEC} --java-home= fetch-jdk --jdk-id labsjdk-ce-19 --alias "${HOME}/jdk"
-          JAVA_HOME_SUFFIX="" && [[ "$(uname -s | tr '[:upper:]' '[:lower:]')" == "darwin" ]] && JAVA_HOME_SUFFIX="/Contents/Home"
-          export JAVA_HOME="${HOME}/jdk${JAVA_HOME_SUFFIX}"
-          echo "JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
-
-          pushd graal/substratevm > /dev/null
-          ${MX_EXEC} build
-          echo "GRAALVM_HOME=$(${MX_EXEC} graalvm-home)" >> $GITHUB_ENV
-          popd > /dev/null
-
-      - name: Build native Game of Life CSP
+      - name: Build native Game of Life
         run: |
           mvn --no-transfer-progress -Pnative package
-          cp ./target/csp-game-of-life ./
+          cp ./target/game-of-life ./
 
-      - name: Run JIT vs. native Game of Life CSP
+      - name: Run Game of Life demo in JIT vs. AOT modes
         run: |
           $GRAALVM_HOME/bin/java --enable-preview -cp target/classes/ gameoflife.Main patterns/puffer_train.txt 0 10 91 10 91 true true
-          ./csp-game-of-life patterns/puffer_train.txt 0 10 91 10 91 true true
+          ./game-of-life patterns/puffer_train.txt 0 10 91 10 91 true true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: csp-game-of-life-${{ matrix.os }}
+          name: game-of-life-${{ matrix.os }}
           path: |
-            csp-game-of-life
+            game-of-life
             patterns/*

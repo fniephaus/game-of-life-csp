@@ -51,10 +51,6 @@ public class GameOfLife {
         Thread.startVirtualThread(this::run);
     }
 
-    int numThreads() {
-        return cells.size() + 1; // see start()
-    }
-
     private void run() {
         while (true) {
             dims.forEachRowCol((r, c) -> tickChannels.get(r).get(c).put(true)); // emit tick event for every cell

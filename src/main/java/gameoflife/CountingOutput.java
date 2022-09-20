@@ -10,8 +10,8 @@ public class CountingOutput implements Consumer<boolean[][]> {
     private int steps = 0;
     private long timingStartNanos;
 
-    public CountingOutput(int numThreads) {
-        System.out.printf("Startup time: %dms; Number of virtual threads: %d%nWarming up", System.currentTimeMillis() - ManagementFactory.getRuntimeMXBean().getStartTime(), numThreads);
+    public CountingOutput(int numThreads, int numChannels) {
+        System.out.printf("Startup time: %dms; Number of virtual threads: %d; Number of channels: %d%nWarming up", System.currentTimeMillis() - ManagementFactory.getRuntimeMXBean().getStartTime(), numThreads, numChannels);
     }
 
     @Override
