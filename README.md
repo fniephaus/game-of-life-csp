@@ -34,17 +34,18 @@ Run:
 Command line arguments are optional.
 
 ```
-./target/game-of-life patterns/spaceship.txt 20 50 50 5 5 false true
+./target/game-of-life patterns/spaceship.txt 20 -1 50 50 5 5 false true
 ```
 
 1. Pattern text file, ex. `patterns/spaceship.txt`
 2. Game of Life simulation period milliseconds, ex. `25`
-3. Left padding columns, ex. `50`
-4. Top padding rows, ex. `50`
-5. Right padding columns, ex. `5`
-6. Bottom padding rows, ex. `5`
-7. Rotate boolean flag, ex. `false`
-8. Benchmark mode boolean flag, ex. `true`
+3. Number of simulation iterations, ex. `100` (`-1` for unlimited)
+4. Left padding columns, ex. `50`
+5. Top padding rows, ex. `50`
+6. Right padding columns, ex. `5`
+7. Bottom padding rows, ex. `5`
+8. Rotate boolean flag, ex. `false`
+9. Benchmark mode boolean flag, ex. `true`
 
 ## Patterns
 
@@ -96,7 +97,7 @@ The following command results in a grid of 50,000 cells (250 x 200):
 That results in `50,002` virtual threads and `497,305` channels.
 
 ```
-./target/game-of-life patterns/gosper_glider_gun.txt 0 2 2 212 189
+./target/game-of-life patterns/gosper_glider_gun.txt 0 -1 2 2 212 189
 ```
 
 It's a demonstration of the viability of virtual threads in a highly concurrent, computationally intensive application.
