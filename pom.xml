@@ -27,31 +27,60 @@
             <id>native</id>
             <build>
                 <plugins>
-                <plugin>
-                    <groupId>org.graalvm.buildtools</groupId>
-                    <artifactId>native-maven-plugin</artifactId>
-                    <version>0.9.13</version>
-                    <extensions>true</extensions>
-                    <executions>
-                    <execution>
-                        <id>build-native</id>
-                        <goals>
-                        <goal>build</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    </executions>
-                    <configuration>
-                        <mainClass>gameoflife.Main</mainClass>
-                        <buildArgs>
-                            <arg>--enable-preview</arg>
-                            <arg>--install-exit-handlers</arg>
-                            <!-- <arg>\-\gc=G1</arg> -->
-                            <!-- <arg>\-\-pgo-instrument</arg> -->
-                            <!-- <arg>\-\-pgo=${project.basedir}/default.iprof</arg> -->
-                        </buildArgs>
-                    </configuration>
-                </plugin>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.9.13</version>
+                        <extensions>true</extensions>
+                        <executions>
+                        <execution>
+                            <id>build-native</id>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>gameoflife.Main</mainClass>
+                            <buildArgs>
+                                <arg>--enable-preview</arg>
+                                <arg>--install-exit-handlers</arg>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native-ee-g1</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.9.13</version>
+                        <extensions>true</extensions>
+                        <executions>
+                        <execution>
+                            <id>build-native</id>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>gameoflife.Main</mainClass>
+                            <buildArgs>
+                                <arg>--enable-preview</arg>
+                                <arg>--install-exit-handlers</arg>
+                                <arg>--gc=G1</arg>
+                                <!-- <arg>- -pgo-instrument</arg> -->
+                                <!-- <arg>- -pgo=${project.basedir}/default.iprof</arg> -->
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>

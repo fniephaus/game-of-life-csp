@@ -24,7 +24,8 @@ jobs:
 
       - name: Build native Game of Life
         run: |
-          mvn --no-transfer-progress -Pnative package
+          if [[ "${RUNNER_OS}" == "Linux" ]]; then mvn_profile="native-ee-g1"; else mvn_profile="native"; fi
+          mvn --no-transfer-progress -P$mvn_profile package
           cp ./target/game-of-life ./
 
       - name: Run Game of Life demo in JIT vs. AOT modes
