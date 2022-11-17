@@ -28,8 +28,9 @@ jobs:
 
       - name: Run Game of Life demo in JIT vs. AOT modes
         run: |
-          $GRAALVM_HOME/bin/java --enable-preview -cp target/classes/ gameoflife.Main patterns/puffer_train.txt 0 10 91 10 91 true true
-          ./game-of-life patterns/puffer_train.txt 0 10 91 10 91 true true
+          if [[ "${RUNNER_OS}" == "Linux" ]]; then bench="/usr/bin/time -v"; else bench="time"; fi
+          $bench $JAVA_HOME/bin/java --enable-preview -cp target/classes/ gameoflife.Main patterns/puffer_train.txt 0 10 91 10 91 true true
+          $bench ./game-of-life patterns/puffer_train.txt 0 10 91 10 91 true true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
