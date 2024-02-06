@@ -1,5 +1,5 @@
 name: Build with GraalVM Native Image
-on: [push]
+on: [push, workflow_dispatch]
 env:
   MX_PYTHON: python3.8
 jobs:
